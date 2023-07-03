@@ -1,0 +1,40 @@
+.logo {
+  width: 10rem;
+}
+
+.slide img {
+  height: 20rem;
+  object-fit: cover;
+  filter: brightness(0.7);
+}
+
+.network {
+  width: 2.5rem;
+}
+
+table,
+th,
+td {
+  border: 2px solid rgb(87, 14, 6);
+  border-collapse: collapse;
+  padding: 0.5rem;
+}
+
+main {
+  min-height: 50vh;
+}
+
+.img-details {
+  height: 22rem;
+}
+
+body {
+background-color: #8EC5FC;
+background-image: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%);
+}
+
+.img-fluid{
+  height: 22rem!important;
+  width: 20rem!important;
+  object-fit: cover!important;
+}
