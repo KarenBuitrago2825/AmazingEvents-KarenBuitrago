@@ -38,3 +38,12 @@ background-image: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%);
   width: 20rem!important;
   object-fit: cover!important;
 }
+
+.form-control{
+  width: 10rem;
+  
+}
+
+.space-input{
+  width: 25rem;
+}

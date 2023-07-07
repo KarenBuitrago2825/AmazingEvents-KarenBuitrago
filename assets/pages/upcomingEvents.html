@@ -8,7 +8,7 @@
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <link rel="stylesheet" href="../style/style.css">
     <link rel="shortcut icon" href="../images/favicon.png" type="image/x-icon">
-    <title>Amazing Events | Home</title>
+    <title>Amazing Events | Upcoming Events</title>
 </head>
 
 <body>
@@ -59,13 +59,13 @@
                     aria-label="Slide 5"></button>
             </div>
             <div class="carousel-inner">
-                <div class="carousel-item ">
+                <div class="carousel-item active ">
                     <img src="../images/optional_banner_2.jpg" class="d-block w-100" alt="cinema">
                     <div class="carousel-caption d-md-block top-0 mt-5">
-                        <h5 class="mt-5 display-1 fw-bolder">HOME</h5>
+                        <h5 class="mt-5 display-1 fw-bolder">UPCOMING EVENTS</h5>
                     </div>
                 </div>
-                <div class="carousel-item active">
+                <div class="carousel-item ">
                     <img src="../images/optional_banner_1.jpg" class="d-block w-100" alt="food">
                     <div class="carousel-caption  d-md-block top-0 mt-5 ">
                         <h5 class="mt-5 display-1 fw-bolder">UPCOMING EVENTS</h5>
@@ -74,19 +74,19 @@
                 <div class="carousel-item">
                     <img src="../images/optional_banner_3.jpg" class="d-block w-100" alt="cathedral">
                     <div class="carousel-caption  d-md-block top-0 mt-5">
-                        <h5 class="mt-5 display-1 fw-bolder">PAST EVENTS</h5>
+                        <h5 class="mt-5 display-1 fw-bolder">UPCOMING EVENTS</h5>
                     </div>
                 </div>
                 <div class="carousel-item">
                     <img src="../images/optional_banner_5.jpg" class="d-block w-100" alt="microphone">
                     <div class="carousel-caption  d-md-block top-0 mt-5">
-                        <h5 class="mt-5 display-1 fw-bolder">CONTACT</h5>
+                        <h5 class="mt-5 display-1 fw-bolder">UPCOMING EVENTS</h5>
                     </div>
                 </div>
                 <div class="carousel-item">
                     <img src="../images/optional_banner_4.jpg" class="d-block w-100" alt="microphone">
                     <div class="carousel-caption d-md-block top-0 mt-5">
-                        <h5 class="mt-5 display-1 fw-bolder">STATS</h5>
+                        <h5 class="mt-5 display-1 fw-bolder">UPCOMING EVENTS</h5>
                     </div>
                 </div>
             </div>
@@ -165,48 +165,7 @@
         </div>
 
         <div class="container">
-            <div class="mt-4 row g-5">
-                <div class="col-12 col-md-6 col-xl-4">
-                    <div class="card">
-                        <img src="../images/costume_party.jpg" class="card-img-top" alt="costume">
-                        <div class="card-body">
-                            <h5 class="card-title">Halloween Night</h5>
-                            <p class="card-text">Come in your scariest costume character to win amazing prizes.</p>
-                            <div class="d-flex justify-content-between">
-                                <p>Price: 12USD</p>
-                                <a href="./details.html" class="btn btn-danger">Details</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class=" col-12 col-md-6 col-xl-4">
-                    <div class=" card">
-                        <img src="../images/metallica.jpeg" class="card-img-top" alt="metallica band">
-                        <div class="card-body">
-                            <h5 class="card-title">Metallica in concert</h5>
-                            <p class="card-text">The only concert of the most emblematic band in the world</p>
-                            <div class="d-flex justify-content-between">
-                                <p>Price: 150USD</p>
-                                <a href="./details.html" class="btn btn-danger">Details</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6 col-xl-4">
-                    <div class="card">
-                        <img src="../images/cinema.jpg" class="card-img-top" alt="cinema">
-                        <div class="card-body">
-                            <h5 class="card-title">Avengers</h5>
-                            <p class="card-text">Marvel's Avengers 3d premiere the start of an epic saga
-                                with your best
-                                superheroes</p>
-                            <div class="d-flex justify-content-between">
-                                <p>Price: 250USD</p>
-                                <a href="./details.html" class="btn btn-danger">Details</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div id="sectionTarjetas" class="mt-4 row g-5">
             </div>
         </div>
     </main>
@@ -225,7 +184,10 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
         crossorigin="anonymous"></script>
-        
+
+    <script src="../scripts/data.js"></script>
+    <script src="../scripts/upcomingEvents.js"></script>
+
 </body>
 
 </html>
