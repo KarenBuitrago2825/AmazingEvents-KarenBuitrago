@@ -21,6 +21,11 @@ function crearTarjeta(objeto) {
 }
 
 function mostrarTarjetas(eventos, contenedorTarjetas) {
+  if (eventos.length == 0) {
+    contenedorTarjetas.innerHTML =
+      "El evento buscado no se encuentra disponible";
+  }
+
   for (let evento of eventos) {
     contenedorTarjetas.innerHTML += crearTarjeta(evento);
   }
