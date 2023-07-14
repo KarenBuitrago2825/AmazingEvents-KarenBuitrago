@@ -1,4 +1,7 @@
 let contenedorTarjetas = document.getElementById("sectionTarjetas");
+let contenedorCheck = document.getElementById("contenedorCheck");
+let search = document.getElementById("search-input");
+const arrayEventos = data.events;
 
 function crearTarjeta(objeto) {
   return `
@@ -10,7 +13,7 @@ function crearTarjeta(objeto) {
           <p class="card-text">${objeto.description}.</p>
           <div class="d-flex justify-content-between">
               <p>Price:${objeto.price}</p>
-              <a href="./assets/pages/details.html" class="btn btn-danger">Details</a>
+              <a href="../pages/details.html?parametros=${objeto._id}" class="btn btn-danger">Details</a>
           </div>
       </div>
   </div>
@@ -33,6 +36,62 @@ function selectorEventos(eventos, currentDate) {
   return eventosPasados;
 }
 
-let eventosPasados = selectorEventos(data.events, data.currentDate);
-mostrarTarjetas(eventosPasados, contenedorTarjetas);
+let eventosPasados = selectorEventos(arrayEventos, data.currentDate);
 console.log(eventosPasados);
+
+function crearCheckbox(categoria) {
+  return `<div class="row ps-3">
+    <div class="form-check col-sm-6 col-xl">
+        <input class="form-check-input" type="checkbox" value="${categoria}" id="${categoria}">
+        <label class="form-check-label" for="${categoria}">
+           ${categoria}
+        </label>
+    </div> `;
+}
+
+function mostrarCheckbox(array, lugar) {
+  for (const categoria of array) {
+    lugar.innerHTML += crearCheckbox(categoria);
+  }
+}
+
+let categoriasRepetidas = arrayEventos.map((evento) => evento.category);
+console.log(categoriasRepetidas, contenedorCheck);
+
+let categoriasSinRepetir = Array.from(new Set(categoriasRepetidas));
+
+mostrarCheckbox(categoriasSinRepetir, contenedorCheck);
+mostrarTarjetas(eventosPasados, contenedorTarjetas);
+
+function filtrarPorCheck(array, contenedorHTML) {
+  contenedorHTML.innerHTML = "";
+  let categoriasElegida = [];
+  let checkboxSeleccionado = document.querySelectorAll(
+    'input[type="checkbox"]:checked'
+  );
+  checkboxSeleccionado.forEach(function (input) {
+    categoriasElegida.push(input.value);
+  });
+  let arrayFiltrado = array.filter(
+    (evento) =>
+      categoriasElegida.includes(evento.category) ||
+      categoriasElegida.length == 0
+  );
+  mostrarTarjetas(arrayFiltrado,contenedorTarjetas);
+}
+
+contenedorCheck.addEventListener("change", () => {
+  filtrarPorCheck(eventosPasados, contenedorTarjetas);
+});
+
+function filtrarPorTexto(array, textoUsuario) {
+  let arrayText = array.filter((evento) =>
+    evento.name.toLowerCase().includes(textoUsuario)
+  );
+  mostrarTarjetas(arrayText,contenedorTarjetas);
+}
+
+search.addEventListener("keyup", () => {
+  contenedorTarjetas.innerHTML = "";
+  filtrarPorTexto(eventosPasados, search.value);
+});
