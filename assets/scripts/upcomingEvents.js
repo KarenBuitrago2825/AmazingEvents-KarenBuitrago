@@ -95,3 +95,12 @@ search.addEventListener("keyup", () => {
   contenedorTarjetas.innerHTML = "";
   filtrarPorTexto(eventosFuturos, search.value);
 });
+
+
+function filtrarCheck(eventos, categoria){
+  if(categoria ==""){
+    return eventos
+  }
+  const aux = eventos.filter(evento =>evento.category == categoria)
+  return aux
+}
