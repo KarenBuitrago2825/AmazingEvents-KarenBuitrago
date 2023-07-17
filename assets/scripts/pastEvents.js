@@ -2,7 +2,29 @@ let contenedorTarjetas = document.getElementById("sectionTarjetas");
 let contenedorCheck = document.getElementById("contenedorCheck");
 let search = document.getElementById("search-input");
 const arrayEventos = data.events;
+// mostrarCheckbox(categoriasSinRepetir, contenedorCheck);
+// mostrarTarjetas(eventosPasados, contenedorTarjetas);
 
+//📌 Fetch
+let eventosPasados 
+let eventos = [];
+fetch("https://mindhub-xj03.onrender.com/api/amazing")
+  .then((respuesta) => respuesta.json())
+  .then((data) => {
+    eventos = data.events;
+    console.log(eventos);
+    imprimirEventosPorConsola(eventos);
+    // mostrarTarjetas(eventos);
+    // mostrarCheckbox(eventos);
+    eventosPasados = selectorEventos(eventos, data.currentDate);
+    console.log(eventosPasados);
+    let categoriasRepetidas = arrayEventos.map((evento) => evento.category);
+    console.log(categoriasRepetidas, contenedorCheck);
+    let categoriasSinRepetir = Array.from(new Set(categoriasRepetidas));
+  })
+  .catch((error) => console.log(error));
+
+//📌Funciones -> Van afuera del fetch
 function crearTarjeta(objeto) {
   return `
   <div class="col-12 col-md-6 col-xl-4 ">
@@ -41,9 +63,6 @@ function selectorEventos(eventos, currentDate) {
   return eventosPasados;
 }
 
-let eventosPasados = selectorEventos(arrayEventos, data.currentDate);
-console.log(eventosPasados);
-
 function crearCheckbox(categoria) {
   return `<div class="row ps-3">
     <div class="form-check col-sm-6 col-xl">
@@ -60,14 +79,6 @@ function mostrarCheckbox(array, lugar) {
   }
 }
 
-let categoriasRepetidas = arrayEventos.map((evento) => evento.category);
-console.log(categoriasRepetidas, contenedorCheck);
-
-let categoriasSinRepetir = Array.from(new Set(categoriasRepetidas));
-
-mostrarCheckbox(categoriasSinRepetir, contenedorCheck);
-mostrarTarjetas(eventosPasados, contenedorTarjetas);
-
 function filtrarPorCheck(array, contenedorHTML) {
   contenedorHTML.innerHTML = "";
   let categoriasElegida = [];
@@ -82,19 +93,27 @@ function filtrarPorCheck(array, contenedorHTML) {
       categoriasElegida.includes(evento.category) ||
       categoriasElegida.length == 0
   );
-  mostrarTarjetas(arrayFiltrado,contenedorTarjetas);
+  // mostrarTarjetas(arrayFiltrado,contenedorTarjetas);
 }
-
-contenedorCheck.addEventListener("change", () => {
-  filtrarPorCheck(eventosPasados, contenedorTarjetas);
-});
 
 function filtrarPorTexto(array, textoUsuario) {
   let arrayText = array.filter((evento) =>
     evento.name.toLowerCase().includes(textoUsuario)
   );
-  mostrarTarjetas(arrayText,contenedorTarjetas);
+  // mostrarTarjetas(arrayText,contenedorTarjetas);
 }
+
+function imprimirEventosPorConsola(array) {
+  for (evento of array) {
+    console.log(evento.name);
+  }
+}
+
+//📌 Escuchadores -> Van afuera del fetch
+
+contenedorCheck.addEventListener("change", () => {
+  filtrarPorCheck(eventosPasados, contenedorTarjetas);
+});
 
 search.addEventListener("keyup", () => {
   contenedorTarjetas.innerHTML = "";

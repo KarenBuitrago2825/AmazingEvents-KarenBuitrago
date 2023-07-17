@@ -1,8 +1,22 @@
 let contenedorTarjetas = document.getElementById("sectionTarjetas");
 let contenedorCheck = document.getElementById("contenedorCheck");
 let search = document.getElementById("search-input");
-const arrayEventos = data.events;
+// const arrayEventos = data.events;
 
+//📌 Fetch
+let eventos;
+fetch("https://mindhub-xj03.onrender.com/api/amazing")
+  .then((respuesta) => respuesta.json())
+  .then((data) => {
+    eventos = data.events;
+    let categoriasRepetidas = eventos.map((evento) => evento.category);
+    let categoriasSinRepetir = Array.from(new Set(categoriasRepetidas));
+    mostrarTarjetas(eventos);
+    mostrarCheckbox(categoriasSinRepetir, contenedorCheck);
+  })
+  .catch((error) => console.log(error));
+
+//📌Funciones
 function crearTarjeta(objeto) {
   return `
   <div class="col-12 col-md-6 col-xl-4 ">
@@ -47,22 +61,13 @@ function mostrarCheckbox(array, lugar) {
   }
 }
 
-let categoriasRepetidas = arrayEventos.map((evento) => evento.category);
-console.log(categoriasRepetidas, contenedorCheck);
-
-let categoriasSinRepetir = Array.from(new Set(categoriasRepetidas));
-
-mostrarCheckbox(categoriasSinRepetir, contenedorCheck);
-
-mostrarTarjetas(arrayEventos);
-
 function filtrarPorCheck(array, contenedorHTML) {
   contenedorHTML.innerHTML = "";
   let categoriasElegida = [];
   let checkboxSeleccionado = document.querySelectorAll(
     'input[type="checkbox"]:checked'
   );
-  checkboxSeleccionado.forEach(function (input) {
+  checkboxSeleccionado.forEach((input) => {
     categoriasElegida.push(input.value);
   });
   let arrayFiltrado = array.filter(
@@ -70,22 +75,50 @@ function filtrarPorCheck(array, contenedorHTML) {
       categoriasElegida.includes(evento.category) ||
       categoriasElegida.length == 0
   );
-  mostrarTarjetas(arrayFiltrado);
-}
+  return arrayFiltrado;
 
-contenedorCheck.addEventListener("change", () => {
-  filtrarPorCheck(arrayEventos, contenedorTarjetas);
-});
+}
 
 function filtrarPorTexto(array, textoUsuario) {
   let arrayText = array.filter((evento) =>
-    evento.name.toLowerCase().includes(textoUsuario)
+    evento.name.toLowerCase().includes(textoUsuario.toLowerCase())
   );
-  mostrarTarjetas(arrayText);
+    return arrayText;
 }
 
-search.addEventListener("keyup", () => {
-  contenedorTarjetas.innerHTML = "";
-  filtrarPorTexto(arrayEventos, search.value);
+function filtroCruzado(arrayEventos, categoriasElegida, textoUsuario) {
+  const filtrarPorCheck2 = filtrarPorCheck(arrayEventos, categoriasElegida);
+  console.log(filtrarPorCheck2);
+  const filtrarPorTexto2 = filtrarPorTexto(filtrarPorCheck2, textoUsuario);
+  console.log(filtrarPorTexto2);
+  return filtrarPorTexto2;
+}
+
+function imprimirEventosPorConsola(array) {
+  for (evento of array) {
+    console.log(evento.name);
+  }
+}
+
+//📌 Escuchadores
+contenedorCheck.addEventListener("change", () => {
+  console.log("El usuario hizo click");
+  const eventosFiltrados = filtroCruzado(
+    eventos,
+    contenedorTarjetas,
+    search.value
+  );
+  mostrarTarjetas(eventosFiltrados);
+  // filtrarPorCheck(eventos, contenedorTarjetas);
 });
 
+search.addEventListener("keyup", () => {
+  const eventosFiltrados = filtroCruzado(
+    eventos,
+    contenedorTarjetas,
+    search.value
+  );
+  mostrarTarjetas(eventosFiltrados);
+  // contenedorTarjetas.innerHTML = "";
+  // filtrarPorTexto(eventos, search.value);
+});
