@@ -10,10 +10,10 @@ const eventoTarjeta = arrayEventos.find((evento) => evento._id === idEvento);
 function mostrarTarjeta(array, lugarHTML) {
   lugarHTML.innerHTML = `            <div class="card mb-3 p-3 bg-danger text-light">
     <div class="row g-0">
-        <div class="col-md-4 d-sm-flex justify-content-sm-center">
-            <img src="${array.image}" class="img-fluid rounded-start" alt="food">
+        <div class="col-md-4 d-sm-flex justify-content-sm-center" >
+            <img src="${array.image}" class="img-fluid rounded-start " alt="food">
         </div>
-        <div class="col-md-8">
+        <div class="col-md-8 d-flex align-items-center">
             <div class="card-body">
                 <h5 class="card-title">${array.name}</h5>
                 <p class="card-text">${array.description}</p>
