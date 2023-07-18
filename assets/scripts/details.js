@@ -1,12 +1,8 @@
 let contenedorDetalles = document.getElementById("contenedorDetails");
-// const arrayEventos = data.events;
-
 
 let parametro = location.search;
 let parametroEvento = new URLSearchParams(parametro);
 const idEvento = parametroEvento.get("parametros");
-
-
 
 //📌 Fetch
 let eventos = [];

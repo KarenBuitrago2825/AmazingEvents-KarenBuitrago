@@ -1,4 +1,4 @@
- export function crearTarjeta(objeto) {
+export function crearTarjeta(objeto) {
   return `
   <div class="col-12 col-md-6 col-xl-4 ">
   <div class="card">
@@ -79,4 +79,38 @@ export function imprimirEventosPorConsola(array) {
   for (evento of array) {
     console.log(evento.name);
   }
+}
+
+export function crearTarjeta2(objeto) {
+  return `
+  <div class="col-12 col-md-6 col-xl-4 ">
+  <div class="card h-100">
+      <img src=${objeto.image} class="card-img-top h-50" alt="food fair">
+      <div class="card-body">
+          <h5 class="card-title">${objeto.name}</h5>
+          <p class="card-text">${objeto.description}.</p>
+          <div class="d-flex justify-content-between">
+              <p>Price:${objeto.price}</p>
+              <a href="../pages/details.html?parametros=${objeto._id}" class="btn btn-danger">Details</a>
+          </div>
+      </div>
+  </div>
+</div>`;
+}
+
+export function crearTarjeta3(objeto) {
+  return `
+  <div class="col-12 col-md-6 col-xl-4 ">
+  <div class="card h-100">
+      <img src=${objeto.image} class="card-img-top h-50" alt="food fair">
+      <div class="card-body">
+          <h5 class="card-title">${objeto.name}</h5>
+          <p class="card-text">${objeto.description}.</p>
+          <div class="d-flex justify-content-between">
+              <p>Price:${objeto.price}</p>
+              <a href="../pages/details.html?parametros=${objeto._id}" class="btn btn-danger">Details</a>
+          </div>
+      </div>
+  </div>
+</div>`;
 }
