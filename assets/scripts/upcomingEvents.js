@@ -36,6 +36,8 @@ function crearTarjeta(objeto) {
 </div>`;
 }
 
+// import {mostrarTarjetas}from"./module/functions.js"
+
 function mostrarTarjetas(eventos, contenedorHTMLTarjetas) {
   console.log(contenedorHTMLTarjetas);
   if (eventos.length == 0) {
