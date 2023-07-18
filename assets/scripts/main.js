@@ -34,6 +34,16 @@ function crearTarjeta(objeto) {
 </div>`;
 }
 
+function crearCheckbox(categoria) {
+  return `<div class="row ps-3">
+    <div class="form-check col-sm-6 col-xl">
+        <input class="form-check-input" type="checkbox" value="${categoria}" id="${categoria}">
+        <label class="form-check-label" for="${categoria}">
+           ${categoria}
+        </label>
+    </div> `;
+}
+
 function mostrarTarjetas(eventos) {
   if (eventos.length == 0) {
     contenedorTarjetas.innerHTML =
@@ -43,16 +53,6 @@ function mostrarTarjetas(eventos) {
   for (let evento of eventos) {
     contenedorTarjetas.innerHTML += crearTarjeta(evento);
   }
-}
-
-function crearCheckbox(categoria) {
-  return `<div class="row ps-3">
-    <div class="form-check col-sm-6 col-xl">
-        <input class="form-check-input" type="checkbox" value="${categoria}" id="${categoria}">
-        <label class="form-check-label" for="${categoria}">
-           ${categoria}
-        </label>
-    </div> `;
 }
 
 function mostrarCheckbox(array, lugar) {

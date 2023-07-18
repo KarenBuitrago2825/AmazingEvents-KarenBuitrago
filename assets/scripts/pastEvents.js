@@ -1,30 +1,24 @@
 let contenedorTarjetas = document.getElementById("sectionTarjetas");
 let contenedorCheck = document.getElementById("contenedorCheck");
 let search = document.getElementById("search-input");
-const arrayEventos = data.events;
-// mostrarCheckbox(categoriasSinRepetir, contenedorCheck);
-// mostrarTarjetas(eventosPasados, contenedorTarjetas);
+
 
 //📌 Fetch
-let eventosPasados 
-let eventos = [];
+let eventosPasados;
+let eventos;
 fetch("https://mindhub-xj03.onrender.com/api/amazing")
   .then((respuesta) => respuesta.json())
   .then((data) => {
     eventos = data.events;
-    console.log(eventos);
-    imprimirEventosPorConsola(eventos);
-    // mostrarTarjetas(eventos);
-    // mostrarCheckbox(eventos);
-    eventosPasados = selectorEventos(eventos, data.currentDate);
-    console.log(eventosPasados);
-    let categoriasRepetidas = arrayEventos.map((evento) => evento.category);
-    console.log(categoriasRepetidas, contenedorCheck);
+    let categoriasRepetidas = eventos.map((evento) => evento.category);
     let categoriasSinRepetir = Array.from(new Set(categoriasRepetidas));
+    eventosPasados = selectorEventos(eventos, data.currentDate);
+    mostrarTarjetas(eventosPasados, contenedorTarjetas);
+    mostrarCheckbox(categoriasSinRepetir, contenedorCheck);
   })
   .catch((error) => console.log(error));
 
-//📌Funciones -> Van afuera del fetch
+//📌 Funciones
 function crearTarjeta(objeto) {
   return `
   <div class="col-12 col-md-6 col-xl-4 ">
@@ -54,13 +48,13 @@ function mostrarTarjetas(eventos, contenedorTarjetas) {
 }
 
 function selectorEventos(eventos, currentDate) {
-  let eventosPasados = [];
+  eventosPasadosSeleccionado = [];
   for (let evento of eventos) {
     if (evento.date < currentDate) {
-      eventosPasados.push(evento);
+      eventosPasadosSeleccionado.push(evento);
     }
   }
-  return eventosPasados;
+  return eventosPasadosSeleccionado;
 }
 
 function crearCheckbox(categoria) {
@@ -85,22 +79,28 @@ function filtrarPorCheck(array, contenedorHTML) {
   let checkboxSeleccionado = document.querySelectorAll(
     'input[type="checkbox"]:checked'
   );
-  checkboxSeleccionado.forEach(function (input) {
-    categoriasElegida.push(input.value);
-  });
+  checkboxSeleccionado.forEach((input) => categoriasElegida.push(input.value));
   let arrayFiltrado = array.filter(
     (evento) =>
       categoriasElegida.includes(evento.category) ||
       categoriasElegida.length == 0
   );
-  // mostrarTarjetas(arrayFiltrado,contenedorTarjetas);
+  return arrayFiltrado;
 }
 
 function filtrarPorTexto(array, textoUsuario) {
   let arrayText = array.filter((evento) =>
-    evento.name.toLowerCase().includes(textoUsuario)
+    evento.name.toLowerCase().includes(textoUsuario.toLowerCase())
   );
-  // mostrarTarjetas(arrayText,contenedorTarjetas);
+  return arrayText;
+}
+
+function filtroCruzado(eventosFuturos, categoriasElegida, textoUsuario) {
+  const filtrarPorCheck2 = filtrarPorCheck(eventosPasados, categoriasElegida);
+  console.log(filtrarPorCheck2);
+  const filtrarPorTexto2 = filtrarPorTexto(filtrarPorCheck2, textoUsuario);
+  console.log(filtrarPorTexto2);
+  return filtrarPorTexto2;
 }
 
 function imprimirEventosPorConsola(array) {
@@ -109,13 +109,23 @@ function imprimirEventosPorConsola(array) {
   }
 }
 
-//📌 Escuchadores -> Van afuera del fetch
-
+//📌 Escuchadores
 contenedorCheck.addEventListener("change", () => {
-  filtrarPorCheck(eventosPasados, contenedorTarjetas);
+  console.log("El usuario hizo click");
+  const eventosFiltrados = filtroCruzado(
+    eventosPasados,
+    contenedorTarjetas,
+    search.value
+  );
+  mostrarTarjetas(eventosFiltrados, contenedorTarjetas);
 });
 
 search.addEventListener("keyup", () => {
-  contenedorTarjetas.innerHTML = "";
-  filtrarPorTexto(eventosPasados, search.value);
+  console.log("El usuario escribe");
+  const eventosFiltrados = filtroCruzado(
+    eventosPasados,
+    contenedorTarjetas,
+    search.value
+  );
+  mostrarTarjetas(eventosFiltrados, contenedorTarjetas);
 });

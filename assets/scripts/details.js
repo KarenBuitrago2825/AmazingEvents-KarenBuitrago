@@ -29,4 +29,15 @@ function mostrarTarjeta(array, lugarHTML) {
 </div> `;
 }
 
-mostrarTarjeta(eventoTarjeta,contenedorDetalles)
+
+
+let eventos;
+fetch("https://mindhub-xj03.onrender.com/api/amazing")
+  .then((respuesta) => respuesta.json())
+  .then((data) => {
+    eventos = data.events;
+    let categoriasRepetidas = eventos.map((evento) => evento.category);
+    let categoriasSinRepetir = Array.from(new Set(categoriasRepetidas));
+    mostrarTarjeta(eventoTarjeta,contenedorDetalles)
+  })
+  .catch((error) => console.log(error));

@@ -1,8 +1,24 @@
 let contenedorTarjetas = document.getElementById("sectionTarjetas");
 let contenedorCheck = document.getElementById("contenedorCheck");
 let search = document.getElementById("search-input");
-const arrayEventos = data.events;
 
+
+//📌 Fetch
+let eventosFuturos;
+let eventos;
+fetch("https://mindhub-xj03.onrender.com/api/amazing")
+  .then((respuesta) => respuesta.json())
+  .then((data) => {
+    eventos = data.events;
+    let categoriasRepetidas = eventos.map((evento) => evento.category);
+    let categoriasSinRepetir = Array.from(new Set(categoriasRepetidas));
+    eventosFuturos = selectorEventos(eventos, data.currentDate);
+    mostrarTarjetas(eventosFuturos, contenedorTarjetas);
+    mostrarCheckbox(categoriasSinRepetir, contenedorCheck);
+  })
+  .catch((error) => console.log(error));
+
+//📌 Funciones
 function crearTarjeta(objeto) {
   return `
   <div class="col-12 col-md-6 col-xl-4 ">
@@ -20,29 +36,27 @@ function crearTarjeta(objeto) {
 </div>`;
 }
 
-function mostrarTarjetas(eventos, contenedorTarjetas) {
+function mostrarTarjetas(eventos, contenedorHTMLTarjetas) {
+  console.log(contenedorHTMLTarjetas);
   if (eventos.length == 0) {
-    contenedorTarjetas.innerHTML =
+    contenedorHTMLTarjetas.innerHTML =
       "El evento buscado no se encuentra disponible";
   }
 
   for (let evento of eventos) {
-    contenedorTarjetas.innerHTML += crearTarjeta(evento);
+    contenedorHTMLTarjetas.innerHTML += crearTarjeta(evento);
   }
 }
 
 function selectorEventos(eventos, currentDate) {
-  let eventosFuturos = [];
+  eventosFuturosSeleccionado = [];
   for (let evento of eventos) {
     if (evento.date > currentDate) {
-      eventosFuturos.push(evento);
+      eventosFuturosSeleccionado.push(evento);
     }
   }
-  return eventosFuturos;
+  return eventosFuturosSeleccionado;
 }
-
-let eventosFuturos = selectorEventos(arrayEventos, data.currentDate);
-console.log(eventosFuturos);
 
 function crearCheckbox(categoria) {
   return `<div class="row ps-3">
@@ -60,52 +74,59 @@ function mostrarCheckbox(array, lugar) {
   }
 }
 
-let categoriasRepetidas = arrayEventos.map((evento) => evento.category);
-console.log(categoriasRepetidas, contenedorCheck);
-
-let categoriasSinRepetir = Array.from(new Set(categoriasRepetidas));
-
-mostrarCheckbox(categoriasSinRepetir, contenedorCheck);
-mostrarTarjetas(eventosFuturos, contenedorTarjetas);
-
 function filtrarPorCheck(array, contenedorHTML) {
   contenedorHTML.innerHTML = "";
   let categoriasElegida = [];
   let checkboxSeleccionado = document.querySelectorAll(
     'input[type="checkbox"]:checked'
   );
-  checkboxSeleccionado.forEach(function (input) {
-    categoriasElegida.push(input.value);
-  });
+  checkboxSeleccionado.forEach((input) => categoriasElegida.push(input.value));
   let arrayFiltrado = array.filter(
     (evento) =>
       categoriasElegida.includes(evento.category) ||
       categoriasElegida.length == 0
   );
-  mostrarTarjetas(arrayFiltrado,contenedorTarjetas);
+  return arrayFiltrado;
 }
-
-contenedorCheck.addEventListener("change", () => {
-  filtrarPorCheck(eventosFuturos, contenedorTarjetas);
-});
 
 function filtrarPorTexto(array, textoUsuario) {
   let arrayText = array.filter((evento) =>
-    evento.name.toLowerCase().includes(textoUsuario)
+    evento.name.toLowerCase().includes(textoUsuario.toLowerCase())
   );
-  mostrarTarjetas(arrayText,contenedorTarjetas);
+  return arrayText;
 }
 
-search.addEventListener("keyup", () => {
-  contenedorTarjetas.innerHTML = "";
-  filtrarPorTexto(eventosFuturos, search.value);
+function filtroCruzado(eventosFuturos, categoriasElegida, textoUsuario) {
+  const filtrarPorCheck2 = filtrarPorCheck(eventosFuturos, categoriasElegida);
+  console.log(filtrarPorCheck2);
+  const filtrarPorTexto2 = filtrarPorTexto(filtrarPorCheck2, textoUsuario);
+  console.log(filtrarPorTexto2);
+  return filtrarPorTexto2;
+}
+
+function imprimirEventosPorConsola(array) {
+  for (evento of array) {
+    console.log(evento.name);
+  }
+}
+
+//📌 Escuchadores
+contenedorCheck.addEventListener("change", () => {
+  console.log("El usuario hizo click");
+  const eventosFiltrados = filtroCruzado(
+    eventosFuturos,
+    contenedorTarjetas,
+    search.value
+  );
+  mostrarTarjetas(eventosFiltrados,contenedorTarjetas);
 });
 
-
-function filtrarCheck(eventos, categoria){
-  if(categoria ==""){
-    return eventos
-  }
-  const aux = eventos.filter(evento =>evento.category == categoria)
-  return aux
-}
+search.addEventListener("keyup", () => {
+  console.log("El usuario escribe");
+  const eventosFiltrados = filtroCruzado(
+    eventosFuturos,
+    contenedorTarjetas,
+    search.value
+  );
+  mostrarTarjetas(eventosFiltrados, contenedorTarjetas);
+});
