@@ -104,66 +104,23 @@
     </header>
 
     <main class="d-flex flex-column align-items-center">
-
-        <div class="d-lg-flex col-12 justify-content-between ">
-            <div class="d-lg-flex col-9 mt-3 justify-content-around px-4 px-lg-0">
-                <div class="row ps-3">
-                    <div class="form-check col-sm-6 col-xl">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                        <label class="form-check-label" for="flexCheckDefault">
-                            Food Air
-                        </label>
-                    </div>
-                    <div class="form-check col-sm-6 col-xl">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                        <label class="form-check-label" for="flexCheckChecked">
-                            Museum
-                        </label>
-                    </div>
-                    <div class="form-check col-sm-6 col-xl">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                        <label class="form-check-label" for="flexCheckChecked">
-                            Costume Party
-                        </label>
-                    </div>
-                    <div class="form-check col-sm-6 col-xl">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                        <label class="form-check-label" for="flexCheckChecked">
-                            Music Concert
-                        </label>
-                    </div>
-                    <div class="form-check col-sm-6 col-xl">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                        <label class="form-check-label" for="flexCheckChecked">
-                            Race
-                        </label>
-                    </div>
-                    <div class="form-check col-sm-6 col-xl">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                        <label class="form-check-label" for="flexCheckChecked">
-                            Book Exchange
-                        </label>
-                    </div>
-                    <div class="form-check col-sm-6 col-xl">
-                        <input class="form-check-input" type="checkbox" value="" id="flexCheckChecked">
-                        <label class="form-check-label" for="flexCheckChecked">
-                            Let's go to the cinema
-                        </label>
-                    </div>
+        <div class="container-fluid  d-md-flex justify-content-around ">
+            <div class="d-lg-flex align-items-center justify-content-center ">
+                <div class="d-lg-flex col-9 mt-3 justify-content-between px-4 px-lg-0" id="contenedorCheck">
                 </div>
             </div>
             <div>
-                <nav class="navbar bg-body-tertiary">
-                    <div class="container">
+                <nav class="navbar bg-body-tertiary navbar-search rounded px-2 mt-2">
+                    <div>
                         <form class="d-flex" role="search">
-                            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                            <button class="btn btn-outline-danger" type="submit">Search</button>
+                            <input class="form-control" type="search" placeholder="Search" aria-label="Search"
+                                id="search-input">
+                            <button class="btn btn-outline-danger mx-2" type="submit">Search</button>
                         </form>
                     </div>
                 </nav>
             </div>
         </div>
-
         <div class="container">
             <div id="sectionTarjetas" class="mt-4 row g-5">
             </div>
@@ -185,8 +142,8 @@
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
         crossorigin="anonymous"></script>
 
-    <script src="../scripts/data.js"></script>
-    <script src="../scripts/upcomingEvents.js"></script>
+   
+    <script type="module" src="../scripts/upcomingEvents.js"></script>
 
 </body>
 

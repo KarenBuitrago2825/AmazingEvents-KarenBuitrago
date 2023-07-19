@@ -1,26 +1,38 @@
+import {crearTarjeta, mostrarTarjetas, mostrarCheckbox,filtroCruzado}from"../scripts/module/functions.js"
 let contenedorTarjetas = document.getElementById("sectionTarjetas");
+let contenedorCheck = document.getElementById("contenedorCheck");
+let search = document.getElementById("search-input");
 
-function crearTarjeta(objeto) {
-  return `
-  <div class="col-12 col-md-6 col-xl-4 ">
-  <div class="card h-100">
-      <img src=${objeto.image} class="card-img-top w-100 h-50" alt="food fair">
-      <div class="card-body">
-          <h5 class="card-title">${objeto.name}</h5>
-          <p class="card-text">${objeto.description}.</p>
-          <div class="d-flex justify-content-between">
-              <p>Price:${objeto.price}</p>
-              <a href="./assets/pages/details.html" class="btn btn-danger">Details</a>
-          </div>
-      </div>
-  </div>
-</div>`;
-}
 
-function mostrarTarjetas(eventos) {
-    for (let evento of eventos){
-        contenedorTarjetas.innerHTML += crearTarjeta(evento)
-    }
-}
+//📌 Fetch
+let eventos;
+fetch("https://mindhub-xj03.onrender.com/api/amazing")
+  .then((respuesta) => respuesta.json())
+  .then((data) => {
+    eventos = data.events;
+    let categoriasRepetidas = eventos.map((evento) => evento.category);
+    let categoriasSinRepetir = Array.from(new Set(categoriasRepetidas));
+    mostrarTarjetas(eventos,contenedorTarjetas,crearTarjeta);
+    mostrarCheckbox(categoriasSinRepetir, contenedorCheck);
+  })
+  .catch((error) => console.log(error));
 
-mostrarTarjetas(data.events)
+//📌 Escuchadores
+contenedorCheck.addEventListener("change", () => {
+  console.log("El usuario hizo click");
+  const eventosFiltrados = filtroCruzado(
+    eventos,
+    contenedorTarjetas,
+    search.value
+  );
+  mostrarTarjetas(eventosFiltrados, contenedorTarjetas,crearTarjeta);
+});
+
+search.addEventListener("keyup", () => {
+  const eventosFiltrados = filtroCruzado(
+    eventos,
+    contenedorTarjetas,
+    search.value
+  );
+  mostrarTarjetas(eventosFiltrados, contenedorTarjetas,crearTarjeta);
+});
